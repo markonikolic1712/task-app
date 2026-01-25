@@ -10,7 +10,6 @@ import com.marko.tasks_app.repository.TaskRepository;
 import com.marko.tasks_app.service.TaskService;
 import com.marko.tasks_app.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 

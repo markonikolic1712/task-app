@@ -1,7 +1,6 @@
 package com.marko.tasks_app.domain.dto;
 
 import com.marko.tasks_app.domain.entity.TaskPriority;
-import com.marko.tasks_app.domain.entity.TaskStatus;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;

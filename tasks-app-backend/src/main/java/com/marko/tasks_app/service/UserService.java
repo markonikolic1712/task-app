@@ -2,7 +2,6 @@ package com.marko.tasks_app.service;
 
 import com.marko.tasks_app.domain.CreateUserRequest;
 import com.marko.tasks_app.domain.UpdateUserRequest;
-import com.marko.tasks_app.domain.entity.Task;
 import com.marko.tasks_app.domain.entity.User;
 import org.springframework.stereotype.Service;
 

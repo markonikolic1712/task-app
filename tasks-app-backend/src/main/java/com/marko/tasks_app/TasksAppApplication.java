@@ -6,7 +6,6 @@ import com.marko.tasks_app.domain.entity.TaskStatus;
 import com.marko.tasks_app.domain.entity.User;
 import com.marko.tasks_app.repository.TaskRepository;
 import com.marko.tasks_app.repository.UserRepository;
-import com.marko.tasks_app.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

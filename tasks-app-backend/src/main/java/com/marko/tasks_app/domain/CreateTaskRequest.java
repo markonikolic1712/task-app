@@ -1,7 +1,6 @@
 package com.marko.tasks_app.domain;
 
 import com.marko.tasks_app.domain.entity.TaskPriority;
-import com.marko.tasks_app.domain.entity.User;
 
 import java.time.LocalDate;
 
