@@ -1,0 +1,14 @@
+package com.marko.tasks_app.repository;
+
+import com.marko.tasks_app.domain.entity.Task;
+import com.marko.tasks_app.domain.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+@Repository
+public interface TaskRepository extends JpaRepository<Task, UUID> {
+    List<Task> findAllByUserId(UUID userId);
+}
