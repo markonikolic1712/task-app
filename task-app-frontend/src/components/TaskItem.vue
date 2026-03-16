@@ -1,0 +1,88 @@
+<template>
+  <div class="max-w-[800px]">
+    <div class="flex">
+      <div class="w-16 flex justify-center">
+        <ion-icon
+          v-if="task?.status === 'COMPLETED'"
+          name="checkbox"
+          class="cursor-pointer self-center text-2xl text-app-green"
+          @click="toggleStatus(taskId)"
+        ></ion-icon>
+        <ion-icon
+          v-else
+          name="square-outline"
+          class="cursor-pointer self-center text-2xl text-white"
+          @click="toggleStatus(taskId)"
+        ></ion-icon>
+      </div>
+      <div class="flex-1">
+        <div class="flex flex-col text-[clamp(16px,1.0vw,20px)]">
+          <h1 class="font-medium text-[clamp(18px,1.2vw,24px)]">{{ task.title }}</h1>
+          <p class="text-app-gray">{{ task.description }}</p>
+          <div class="flex text-app-gray items-center space-x-2">
+            <ion-icon name="flag-outline" :class="getFlagColor(task.priority)"></ion-icon>
+            <span class="pr-2">{{ task.priority }}</span>
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>{{ getFormattedDueDate(task.dueDate) }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex w-1/5 min-w-[50px] max-w-[250px] space-x-1 justify-end pr-5">
+        <ion-icon
+          name="create-outline"
+          class="cursor-pointer self-center text-2xl"
+          @click="editTask(task)"
+        ></ion-icon>
+        <ion-icon
+          name="trash-outline"
+          class="cursor-pointer self-center text-2xl"
+          @click="deleteTask(task)"
+        ></ion-icon>
+      </div>
+    </div>
+    <hr class="border-app-gray-three my-1" />
+  </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { useTaskAppStore } from '@/stores/tasks'
+
+const tasksStore = useTaskAppStore()
+
+const { taskId } = defineProps({
+  taskId: { type: String, required: true },
+})
+
+// direktan getter iz store-a
+const task = computed(() => tasksStore.getTaskById(taskId))
+
+// lokalni reactive props za ion-icon
+//const isCompleted = computed(() => task.value?.status === 'COMPLETED')
+//const iconName = computed(() => (isCompleted.value ? 'checkbox' : 'square-outline'))
+
+const toggleStatus = (id) => {
+  tasksStore.toggleTaskStatus(id)
+}
+
+const getFormattedDueDate = (dueDate) => {
+  return new Date(dueDate).toLocaleDateString('sr-RS', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+}
+
+const getFlagColor = (priority) => {
+  if (priority === 'LOW') return 'text-app-blue'
+  if (priority === 'HIGH') return 'text-app-red'
+}
+
+const editTask = (task) => {
+  console.log('editTask: ' + JSON.stringify(task))
+}
+
+const deleteTask = (task) => {
+  console.log('deleteTask: ' + JSON.stringify(task))
+}
+</script>

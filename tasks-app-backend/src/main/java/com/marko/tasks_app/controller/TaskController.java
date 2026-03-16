@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping(path = "/api/v1/tasks")
 public class TaskController {
@@ -44,7 +45,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDto>> getTaskList() {
+    public ResponseEntity<List<TaskDto>> getTaskList() throws InterruptedException {
+        //Thread.sleep(3000); // 3000 milisekundi = 3 sekunde
         List<Task> tasks = taskService.getTasks();
         List<TaskDto> dtoList = tasks.stream().map(taskMapper::toDto).toList();
         return new ResponseEntity<>(dtoList, HttpStatus.OK);

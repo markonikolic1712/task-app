@@ -40,11 +40,11 @@ public class TasksAppApplication implements CommandLineRunner {
 		}
 
 		Task[] tasks = new Task[] {
-				new Task(null,"Task 1", "Task 1 description", LocalDate.parse("2026-07-31"), TaskStatus.OPEN, TaskPriority.HIGH, Instant.now(), Instant.now(), users[0]),
-				new Task(null,"Task 2", "Task 2 description", LocalDate.parse("2026-10-23"), TaskStatus.OPEN, TaskPriority.LOW, Instant.now(), Instant.now(), users[0]),
-				new Task(null,"Task 3", "Task 3 description", LocalDate.parse("2026-02-28"), TaskStatus.OPEN, TaskPriority.MEDIUM, Instant.now(), Instant.now(), users[0]),
-				new Task(null,"Task 4", "Task 4 description", LocalDate.parse("2026-02-28"), TaskStatus.OPEN, TaskPriority.MEDIUM, Instant.now(), Instant.now(), users[1]),
-				new Task(null,"Task 5", "Task 5 description", LocalDate.parse("2026-02-28"), TaskStatus.OPEN, TaskPriority.MEDIUM, Instant.now(), Instant.now(), users[2])
+				new Task(null,"Task 1", "Task 1 description", LocalDate.now(), TaskStatus.OPEN, TaskPriority.HIGH, Instant.now(), Instant.now(), users[0]),
+				new Task(null,"Task 2", "Task 2 description", LocalDate.parse("2026-03-14"), TaskStatus.COMPLETED, TaskPriority.LOW, Instant.now(), Instant.now(), users[0]),
+				new Task(null,"Task 3", "Task 3 description", LocalDate.parse("2026-06-17"), TaskStatus.COMPLETED, TaskPriority.MEDIUM, Instant.now(), Instant.now(), users[0]),
+				new Task(null,"Task 4", "Task 4 description", LocalDate.parse("2026-05-05"), TaskStatus.OPEN, TaskPriority.HIGH, Instant.now(), Instant.now(), users[1]),
+				new Task(null,"Task 5", "Task 5 description", LocalDate.parse("2026-04-28"), TaskStatus.OPEN, TaskPriority.MEDIUM, Instant.now(), Instant.now(), users[2])
 		};
 
 		for(Task task : tasks) {
