@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: [
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    './node_modules/vue-tailwind-datepicker/**/*.js',
+  ],
   theme: {
     extend: {
       colors: {
@@ -12,6 +16,15 @@ export default {
         'app-red': '#EF4444',
         'app-gray': '#79797a',
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+      },
     },
     fontFamily: {
       Roboto: ['Roboto, sans-serif'],
@@ -21,5 +34,5 @@ export default {
       md: '768px',
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar')],
 }

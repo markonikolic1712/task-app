@@ -1,6 +1,10 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getAllTasks } from '@/api/taskAppService'
+import { getAllTasks, deleteTask, updateTaskById, createTask } from '@/api/taskAppService'
+import { useToast } from 'vue-toastification'
+import { ToastMessages } from '@/constants/toastMessages'
+
+const toast = useToast()
 
 export const useTaskAppStore = defineStore('tasks', () => {
   //////////////////////////////////////////////////////////
@@ -52,6 +56,7 @@ export const useTaskAppStore = defineStore('tasks', () => {
   // ])
   const favoritieIds = ref([])
   const loading = ref(false)
+  const username = ref('pera')
   ///////////////////////////////////////////////////////
   ////////////////// properties - kraj //////////////////
   ///////////////////////////////////////////////////////
@@ -67,16 +72,78 @@ export const useTaskAppStore = defineStore('tasks', () => {
     } finally {
       loading.value = false
     }
-  }
-
-  const toggleTaskStatus = (id) => {
-    taskList.value.forEach((task) => {
-      if (task.id === id) {
-        task.status = task.status === 'COMPLETED' ? 'OPEN' : 'COMPLETED'
-      }
+    taskList.value.forEach((t) => {
+      t.username = username.value
+      //console.log(JSON.stringify(t))
     })
   }
 
+  const toggleTaskStatus = async (id) => {
+    let taskToUpdate
+
+    taskList.value.forEach((task) => {
+      if (task.id === id) {
+        task.status = task.status === 'COMPLETED' ? 'OPEN' : 'COMPLETED'
+        taskToUpdate = { ...task }
+      }
+    })
+    await updateTask(taskToUpdate)
+  }
+
+  const deleteTaskById = async (taskId) => {
+    //const taskListBck = taskList.value
+    const taskListBck = JSON.parse(JSON.stringify(taskList.value))
+    // ili const taskListBck = structuredClone(taskList.value)
+    try {
+      const task = taskList.value.find((t) => t.id === taskId)
+      taskList.value.splice(taskList.value.indexOf(task), 1)
+      const response = await deleteTask(taskId)
+      // Axios već baca grešku ako status nije 2xx tako da provera (response != 204) ne mora da se radi
+      // if (response != 204) {
+      //   console.log('Doslo je do problema prilikom brisanja taska')
+      //   taskList.value = taskListBck
+      // }
+      await fetchTasks()
+      toast.success(ToastMessages.TASK_DELETED)
+    } catch (error) {
+      console.log('Doslo je do problema prilikom brisanja taska. ' + error)
+      taskList.value = [...taskListBck]
+      toast.error(ToastMessages.TASK_DELETE_ERROR)
+      throw error
+    }
+  }
+
+  const saveTask = async (task) => {
+    //const task = { ...t, username: username.value }
+    task.username = username.value
+
+    const taskListBck = JSON.parse(JSON.stringify(taskList.value))
+    try {
+      const response = await createTask(task)
+      await fetchTasks()
+      toast.success(ToastMessages.TASK_SAVED)
+    } catch (error) {
+      console.log('Doslo je do problema prilikom kreiranja taska. ' + error)
+      taskList.value = [...taskListBck]
+      toast.error(ToastMessages.TASK_SAVE_ERROR)
+      throw error
+    }
+  }
+
+  const updateTask = async (task) => {
+    task.username = username.value
+    const taskListBck = JSON.parse(JSON.stringify(taskList.value))
+    try {
+      const response = await updateTaskById(task.id, task)
+      await fetchTasks()
+      toast.success(ToastMessages.TASK_UPDATED)
+    } catch (error) {
+      console.log('Doslo je do problema prilikom izmene taska. ' + error)
+      taskList.value = [...taskListBck]
+      toast.error(ToastMessages.TASK_UPDATE_ERROR)
+      throw error
+    }
+  }
   ///////////////////////////////////////////////////////
   /////////////////// actions - kraj ////////////////////
   ///////////////////////////////////////////////////////
@@ -131,5 +198,8 @@ export const useTaskAppStore = defineStore('tasks', () => {
     countCompleted,
     fetchTasks,
     toggleTaskStatus,
+    deleteTaskById,
+    saveTask,
+    updateTask,
   }
 })

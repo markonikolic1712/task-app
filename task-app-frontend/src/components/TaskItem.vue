@@ -20,7 +20,11 @@
           <h1 class="font-medium text-[clamp(18px,1.2vw,24px)]">{{ task.title }}</h1>
           <p class="text-app-gray">{{ task.description }}</p>
           <div class="flex text-app-gray items-center space-x-2">
-            <ion-icon name="flag-outline" :class="getFlagColor(task.priority)"></ion-icon>
+            <!-- <ion-icon name="flag-outline" :class="getFlagColor(task.priority)"></ion-icon> -->
+            <ion-icon
+              name="flag-outline"
+              :style="{ color: getFlagColor(task.priority) }"
+            ></ion-icon>
             <span class="pr-2">{{ task.priority }}</span>
             <ion-icon name="calendar-outline"></ion-icon>
             <span>{{ getFormattedDueDate(task.dueDate) }}</span>
@@ -41,17 +45,26 @@
       </div>
     </div>
     <hr class="border-app-gray-three my-1" />
+    <TaskModal v-model="isModalOpen" :task="selectedTask" @submit="handleSubmit" />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useTaskAppStore } from '@/stores/tasks'
+import { useToast } from 'vue-toastification'
+import TaskModal from './TaskModal.vue'
 
 const tasksStore = useTaskAppStore()
 
-const { taskId } = defineProps({
+const isModalOpen = ref(false)
+const selectedTask = ref(null)
+const isEditMode = ref(false)
+//const priorityColor = ref('')
+
+const { taskId, priorityColor } = defineProps({
   taskId: { type: String, required: true },
+  priorityColor: { type: String },
 })
 
 // direktan getter iz store-a
@@ -74,15 +87,39 @@ const getFormattedDueDate = (dueDate) => {
 }
 
 const getFlagColor = (priority) => {
-  if (priority === 'LOW') return 'text-app-blue'
-  if (priority === 'HIGH') return 'text-app-red'
+  // if (priority === 'LOW') return 'text-app-blue'
+  // if (priority === 'MEDIUM') return 'text-app-green'
+  // if (priority === 'HIGH') return 'text-app-red'
+  if (priority === 'LOW') return '#3B82F4'
+  if (priority === 'MEDIUM') return '#22C55E'
+  if (priority === 'HIGH') return '#EF4444'
 }
 
 const editTask = (task) => {
-  console.log('editTask: ' + JSON.stringify(task))
+  isEditMode.value = true
+  openModal(task)
 }
 
 const deleteTask = (task) => {
-  console.log('deleteTask: ' + JSON.stringify(task))
+  tasksStore.deleteTaskById(task.id)
 }
+
+const openModal = (task = null) => {
+  selectedTask.value = task
+  isModalOpen.value = true
+}
+
+const handleSubmit = async (data) => {
+  await tasksStore.updateTask(data)
+}
+
+// const handleSubmit = async (data) => {
+//   if (data.id === null) {
+//     console.log('TaskItem.vue - data.id === null: ' + JSON.stringify(data))
+//     await tasksStore.saveTask(data)
+//   } else {
+//     console.log('TaskItem.vue - data.id !== null: ' + JSON.stringify(data))
+//     await tasksStore.updateTask(data)
+//   }
+// }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="h-screen conatiner flex text-white font-normal">
+    <div class="min-h-screen flex text-white font-normal">
       <Sidebar />
       <TasksMain />
     </div>
