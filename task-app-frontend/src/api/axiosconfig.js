@@ -17,7 +17,7 @@ async function GET(path) {
   try {
     const response = await axiosInstance.get(path, {})
     //console.log('axiosconfig.js - GET response: ', response.data)
-    if (response.data) return response.data
+    if (response.data !== undefined) return response.data
   } catch (error) {
     throw new Error(error.message)
   }

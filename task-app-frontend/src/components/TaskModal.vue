@@ -34,6 +34,16 @@
 
         <div class="flex flex-1 text-xl space-x-1">
           <div class="w-3/6 text-black">
+            <!-- <VueTailwindDatepicker
+              :key="localForm.dueDate"
+              v-model="localForm.dueDate"
+              :formatter="formatter"
+              as-single
+              :use-range="false"
+              :placeholder="dueDatePlaceholder"
+              value-format="YYYY-MM-DD"
+              input-classes="w-full bg-app-gray-three text-white border focus:ring-1 focus:ring-white rounded px-3 py-2"
+            /> -->
             <VueTailwindDatepicker
               :key="localForm.dueDate"
               v-model="localForm.dueDate"
@@ -95,6 +105,7 @@ const dueDatePlaceholder = computed(() => {
 // ovime se formatira placeholder - ako se ne koristi ovaj formater prikazace sate, minute i sekunde
 const formatter = ref({
   date: 'DD.MM.YYYY.',
+  month: 'MMM',
 })
 
 // props
@@ -127,7 +138,7 @@ watch(
       localForm.value = {
         title: task.title || '',
         description: task.description || '',
-        dueDate: task.dueDate.value || '',
+        dueDate: task.dueDate || '',
         priority: task.priority || '',
         status: task.status || '',
       }
@@ -200,4 +211,17 @@ onMounted(() => {
 })
 </script>
 
-<style scoped></style>
+<style>
+.vtd-datepicker-date.bg-vtd-primary-500 {
+  background-color: #abadb1 !important;
+  color: black !important;
+  font-weight: 700;
+  width: 1.8rem !important;
+  height: 1.8rem !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 80% !important;
+  transform: translate(-50%, -50%) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+</style>

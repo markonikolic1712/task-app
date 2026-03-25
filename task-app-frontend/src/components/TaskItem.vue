@@ -52,7 +52,6 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useTaskAppStore } from '@/stores/tasks'
-import { useToast } from 'vue-toastification'
 import TaskModal from './TaskModal.vue'
 
 const tasksStore = useTaskAppStore()

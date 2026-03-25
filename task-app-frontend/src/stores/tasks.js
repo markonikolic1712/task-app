@@ -69,13 +69,13 @@ export const useTaskAppStore = defineStore('tasks', () => {
     try {
       const data = await getAllTasks()
       taskList.value = data
+      taskList.value.forEach((t) => {
+        t.username = username.value
+        //console.log(JSON.stringify(t))
+      })
     } finally {
       loading.value = false
     }
-    taskList.value.forEach((t) => {
-      t.username = username.value
-      //console.log(JSON.stringify(t))
-    })
   }
 
   const toggleTaskStatus = async (id) => {
@@ -178,7 +178,7 @@ export const useTaskAppStore = defineStore('tasks', () => {
     }).length
   })
 
-  const countScheduled = computed(() => taskList.value.length)
+  const countScheduled = computed(() => getTasksByStatus('OPEN').length)
   const countAll = computed(() => taskList.value.length)
   const countCompleted = computed(() => getTasksByStatus('COMPLETED').length)
   ////////////////////////////////////////////////////
