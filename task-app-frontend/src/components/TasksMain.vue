@@ -9,7 +9,7 @@
 
     <div
       v-else-if="tasksStore.taskList.length > 0"
-      class="max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-transparent hover:scrollbar-thumb-gray-500"
+      class="max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-transparent hover:scrollbar-thumb-gray-500"
     >
       <TaskItem v-for="task in tasksStore.taskList" :key="task.id" :taskId="task.id" />
     </div>
