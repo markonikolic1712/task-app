@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.UUID;
 
@@ -74,7 +75,8 @@ public class TaskController {
 
 
     @PutMapping(path = "/{taskId}")
-    public ResponseEntity<TaskDto> updateTaskById(@Valid @RequestBody UpdateTaskRequestDto updateTaskRequestDto, @PathVariable UUID taskId) {
+    public ResponseEntity<TaskDto> updateTaskById(@PathVariable UUID taskId, @Valid @RequestBody UpdateTaskRequestDto updateTaskRequestDto) {
+        System.out.println(updateTaskRequestDto);
         UpdateTaskRequest updateTaskRequest = taskMapper.fromDto(updateTaskRequestDto);
         Task updatedTask = taskService.updateTaskById(taskId, updateTaskRequest);
 

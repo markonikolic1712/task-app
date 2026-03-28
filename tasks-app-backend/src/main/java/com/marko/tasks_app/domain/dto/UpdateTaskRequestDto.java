@@ -19,7 +19,7 @@ public record UpdateTaskRequestDto(
         @Nullable   // moze da bude null
         String description,
 
-        @FutureOrPresent(message = ERROR_MESSAGE_DUE_DATE_FUTURE) // datum mora da bude danasnji ili u buducnosti
+        //@FutureOrPresent(message = ERROR_MESSAGE_DUE_DATE_FUTURE) // datum mora da bude danasnji ili u buducnosti
         @Nullable
         LocalDate dueDate,
 
