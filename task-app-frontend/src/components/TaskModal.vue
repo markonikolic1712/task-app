@@ -171,20 +171,26 @@ const close = () => {
 
 // submit
 const handleSubmit = () => {
-  console.log('raw dueDate:', localForm.value.dueDate)
-  console.log('placeholder:', dueDatePlaceholder.value)
-  console.log('parsed:', dayjs(localForm.value.dueDate, 'DD.MM.YYYY.').format('YYYY-MM-DD'))
+  const raw = localForm.value.dueDate
+  let formattedDate
+
+  if (!raw) {
+    formattedDate = dayjs(dueDatePlaceholder.value, 'DD.MM.YYYY.').format('YYYY-MM-DD')
+  } else if (dayjs(raw, 'YYYY-MM-DD', true).isValid()) {
+    formattedDate = raw // već je u ispravnom formatu
+  } else {
+    formattedDate = dayjs(raw, 'DD.MM.YYYY.').format('YYYY-MM-DD')
+  }
+
   emit('submit', {
     id: isEditMode.value ? props.task.id : null,
     title: localForm.value.title,
     description: localForm.value.description,
-    dueDate: localForm.value.dueDate
-      ? dayjs(localForm.value.dueDate, 'DD.MM.YYYY.').format('YYYY-MM-DD')
-      : dayjs(dueDatePlaceholder.value, 'DD.MM.YYYY.').format('YYYY-MM-DD'),
+    dueDate: formattedDate,
     priority: localForm.value.priority ? localForm.value.priority : 'MEDIUM',
     status: localForm.value.status,
   })
-  // reset input polja
+
   localForm.value = {
     title: '',
     description: '',
