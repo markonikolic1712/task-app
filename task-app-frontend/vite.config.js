@@ -20,7 +20,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         // target: 'http://localhost:8080',
-        target: 'task-app-production-f719.up.railway.app', // uradio sam deploy backenda na Railway i ovo je target URL
+        target: 'https://task-app-production-f719.up.railway.app', // uradio sam deploy backenda na Railway i ovo je target URL
         changeOrigin: true,
       },
     },
