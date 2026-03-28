@@ -171,6 +171,9 @@ const close = () => {
 
 // submit
 const handleSubmit = () => {
+  console.log('raw dueDate:', localForm.value.dueDate)
+  console.log('placeholder:', dueDatePlaceholder.value)
+  console.log('parsed:', dayjs(localForm.value.dueDate, 'DD.MM.YYYY.').format('YYYY-MM-DD'))
   emit('submit', {
     id: isEditMode.value ? props.task.id : null,
     title: localForm.value.title,
