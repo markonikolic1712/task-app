@@ -1,7 +1,7 @@
 # Stage 1: Build
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY . .
+COPY tasks-app-backend/ .
 RUN mvn package -DskipTests
 
 # Stage 2: Run
