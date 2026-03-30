@@ -1,8 +1,8 @@
 <template>
   <main>
-    <div class="min-h-screen flex text-white font-normal">
-      <Sidebar />
-      <TasksMain />
+    <div class="bg-app-gray-one min-h-screen flex flex-col md:flex-row text-white font-normal">
+      <Sidebar class="w-full md:w-auto" />
+      <TasksMain class="w-full md:w-auto" />
     </div>
   </main>
 </template>

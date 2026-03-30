@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col w-1/5 min-w-[200px] max-w-[400px] bg-app-gray-two p-2">
+  <div
+    class="sidebar flex flex-col w-full md:w-1/5 md:min-w-[200px] md:max-w-[400px] bg-app-gray-two p-2"
+  >
     <!-- <h1 class="font-bold py-2 text-2xl md:text-3xl">Task App</h1> -->
     <h1 class="font-bold py-2 text-[clamp(20px,1.5vw,26px)]">Task App</h1>
     <div class="grid grid-cols-2 space-x-2 mb-2">
@@ -40,4 +42,8 @@ import { useTaskAppStore } from '@/stores/tasks'
 const tasks = useTaskAppStore()
 </script>
 
-<style scoped></style>
+<style scoped>
+.sidebar {
+  transition: width 0.3s ease;
+}
+</style>
